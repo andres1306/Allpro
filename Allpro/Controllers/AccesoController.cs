@@ -15,38 +15,33 @@ namespace Allpro.Controllers
     {
         Logica logica =new Logica();
         Client CL = new Client();
-      
 
         public IActionResult LoginUsers()
         {
             return View();
         }
         [HttpPost]
-        public IActionResult LoginUsers(Client client)
+        public  IActionResult LoginUsers(string password,string username)
         {
-            string message;
+            bool LoginValider = false;
+            int ASD;
             try
-            {
-                var DadaValide = logica.Datavalider(client.Email, client.UserPassword);
-                if (DadaValide)
+            
+           {
+                var Respuesta =logica.LoginUsers(username, password);
+                if (Respuesta.UserValideter)
                 {
-                    var Respuesta = logica.LoginUsers(client);
-                    if (Respuesta)
-                        return RedirectToAction("Index", "Home");
+                    LoginValider = true;
+                return RedirectToAction("Index","Home");
                 }
-                else
-                {
-                    CL.Message="Inserta los datos porfavor ";
-                    return Ok(message);
-                }
+                return RedirectToAction("Acceso", "LoginUser");
             }
             catch(Exception e)
             {
                CL.Message=($"Algo esta fallando: {e}");
                return Ok(CL.Message);
             }
-            message = "Alfue muy mal ";
-            return Ok(message);
+
 
         }
         }

@@ -17,7 +17,9 @@ namespace Allpro.Datos
             using (var conexion = new SqlConnection(cn.GetCadenaSql()))
             {
                 conexion.Open();
-                SqlCommand cmd = new SqlCommand();
+                string query = "Select Email,UserPassword from Client where Email=@Correo and UserPassword=@Clave ";
+
+                SqlCommand cmd = new SqlCommand(query, conexion);
                 cmd.CommandType = CommandType.StoredProcedure;
                 using(var dr = cmd.ExecuteReader())
                 {
@@ -36,8 +38,7 @@ namespace Allpro.Datos
                             Image = Convert.ToString(dr["Image"]),
                             ClientID = Convert.ToInt32(dr["ClientID"]),
                             TypeHouseID = Convert.ToInt32(dr["TypeHouseID"]),
-                            TypePropertyID = Convert.ToInt32(dr["TypePropertyID"]),
-                            Condition = Convert.ToInt32(dr["Condition"]),
+                            TypePropertyID = Convert.ToInt32(dr["TypePropertyID"])
                         });
                     }   
                 }
