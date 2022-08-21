@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
 using Allpro.Models;
-using System.Data;
+using Dapper;
 namespace Allpro.Datos
 {
     public class Logica
     {
         Conexion cn = new Conexion();
+        Client CL = new Client();
         bool rpta;
         public bool NewProperty(Propertys propertys)
         {
@@ -43,26 +44,44 @@ namespace Allpro.Datos
             }
             return rpta;
         }
-
-        public bool LoginUsers(Client client)
+        public MasterAllpro LoginUsers(string username,string password)
         {
+            bool isAdmin = false;
+            string RolId ="" ,NameUser;
             try
             {
                 using (var conexion = new SqlConnection(cn.GetCadenaSql()))
                 {
                     conexion.Open();
-
-                    string query = "Select Email,UserPassword from Client where Email=@Correo and UserPassword=@Clave ";
-
+                    string query = "Select * from Client where UserName=@Username and UserPassword=@Clave ";
                     SqlCommand cmd = new SqlCommand(query, conexion);
-                    cmd.Parameters.AddWithValue("@Correo", client.Email);
-                    cmd.Parameters.AddWithValue("@Clave", client.UserPassword);
+                    cmd.Parameters.AddWithValue("@Clave", password);
+                    cmd.Parameters.AddWithValue("@Username", username);
                     cmd.CommandType = CommandType.Text;
                     SqlDataReader reader = cmd.ExecuteReader();
                     if (reader.HasRows)
-                    {   
-                     rpta = true;
+                    {
+                        while (reader.Read())
+                        {
+                            RolId = reader["RoleID"].ToString();
+                            NameUser = reader["NameClient"].ToString();
+                        }  
+                        if (RolId == "1")
+                         {
+                           isAdmin = true;
+                         }
+                        return new MasterAllpro
+                        {
+                            UserValideter = true,
+                            IsAdmin = isAdmin
+
+                        };
                     }
+                    return new MasterAllpro
+                       { UserValideter = false,
+                         IsAdmin = isAdmin
+                       };
+
                 }
             }
             catch (Exception e)
@@ -70,10 +89,12 @@ namespace Allpro.Datos
                 _ = e.Message;
                 rpta = false;
             }
-            return rpta;
-
+            return new MasterAllpro
+            {
+                UserValideter = false,
+                IsAdmin = isAdmin
+            };
         }
-
         public bool NewUser(Client client)
         {
             try
@@ -102,16 +123,13 @@ namespace Allpro.Datos
             }
             return rpta;
         }
+   
 
-
-        public bool Datavalider(string Email ,  string UserPassword)
+      /*  public bool CloseSeccion()
         {
-            if (UserPassword is null && Email is null)
-            {rpta = false;}
-            else
-            { rpta = true;}
-            return rpta;
-        }
-    }
 
+            return 
+        }*/
+
+    }
 }

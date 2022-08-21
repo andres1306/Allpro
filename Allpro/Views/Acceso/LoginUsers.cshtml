@@ -15,12 +15,12 @@
 
         <form asp-action="LoginUsers" asp-controller="Acceso" method="post">
             <div class="form-group">
-                <label for="exampleInputEmail1">Password</label>
-                <input asp-for="UserPassword" type="password" class="form-control" id="UserPassword" aria-describedby="Password Help" placeholder="Digite La contraceña">
+                <label for="Email">Nombre</label>
+                <input asp-for="UserName" type="text" class="form-control" id="Email" placeholder="Name">
             </div>
             <div class="form-group">
-                <label for="Email">Email</label>
-                <input asp-for="Email" type="Email" class="form-control" id="Email" placeholder="Email">
+                <label for="Password">Password</label>
+                <input asp-for="UserPassword" type="password" class="form-control" id="UserPassword" placeholder="Digite La contraceña">
             </div>
             <button type="submit" class="btn btn-primary">Guardar</button>
         </form>

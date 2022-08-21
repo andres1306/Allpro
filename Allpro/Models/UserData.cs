@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace Allpro.Models
 {
-    public class RolforUsers
+    public class UserData
     {
-        public int RolUserID{ get; set; }
+        public string RoleID { get; set; }
+        public string NameClient { get; set; }
         public int ClientID { get; set; }
-        public int RoleID { get; set; }
     }
 }

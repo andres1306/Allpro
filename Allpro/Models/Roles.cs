@@ -5,9 +5,7 @@ using System.Threading.Tasks;
 
 namespace Allpro.Models
 {
-    public class TypesHouse
+    public class Roles
     {
-        public int TypesHouseID { get; set; }
-        public int TypesHouseName { get; set; } 
     }
 }

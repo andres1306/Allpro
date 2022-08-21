@@ -9,5 +9,7 @@ namespace Allpro.Models
     { 
         public bool error { get; set; }
         public string Message { get; set; }
+        public bool UserValideter { get; set; }
+        public bool IsAdmin { get; set; }
     }
 }
