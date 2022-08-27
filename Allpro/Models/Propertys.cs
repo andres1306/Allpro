@@ -17,9 +17,9 @@ namespace Allpro.Models
         public int Price { get; set; }
         public int Stratum { get; set; }
         public string Image{ get; set; }
-        public int Condition{ get; set; }
         public int ClientID { get; set; }
         public int TypeHouseID{ get; set; }
         public int TypePropertyID { get; set; }
+        public byte Condition { get; set; }
     }
 }

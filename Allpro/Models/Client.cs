@@ -10,7 +10,6 @@ namespace Allpro.Models
     {
         public int ClientID { get; set; }
         public string NameClient{ get; set; }
-        public int BanckClient { get; set; }
         public int DocumentClient{ get; set; }
         public int PhoneClient{ get; set; }
         public string UserName { get; set; }

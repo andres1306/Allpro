@@ -13,7 +13,7 @@ namespace Allpro.Controllers
 {
     public class AccesoController : Controller
     {
-        Logica logica =new Logica();
+        Logica logica = new Logica();
         Client CL = new Client();
 
         public IActionResult LoginUsers()
@@ -21,29 +21,48 @@ namespace Allpro.Controllers
             return View();
         }
         [HttpPost]
-        public  IActionResult LoginUsers(string password,string username)
+        public bool LoginUsers(string username, string password)
         {
             bool LoginValider = false;
-            int ASD;
             try
-            
-           {
-                var Respuesta =logica.LoginUsers(username, password);
+            {
+                var Respuesta = logica.LoginUsers(username, password);
                 if (Respuesta.UserValideter)
                 {
                     LoginValider = true;
-                return RedirectToAction("Index","Home");
                 }
-                return RedirectToAction("Acceso", "LoginUser");
+                return LoginValider;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-               CL.Message=($"Algo esta fallando: {e}");
-               return Ok(CL.Message);
+                CL.Message = ($"Algo esta fallando: {e}");
+                return LoginValider;
             }
 
 
         }
+        public IActionResult NewUser()
+        {
+            return View();
         }
-}
 
+        [HttpPost]
+        public bool NewUser(Client client)
+        {
+            bool newuser = false;
+            try
+            {
+                var Respuesta = logica.NewUser(client);
+                if (Respuesta)
+                {
+                    newuser = true;
+                }
+                return newuser;
+            }
+            catch (Exception e)
+            {
+                return newuser;
+            }
+        }
+    }
+}

@@ -10,24 +10,35 @@ using Allpro.Models;
 using Allpro.Datos;
 namespace Allpro.Controllers
 {
-    public class NewPropertyteController : Controller
+    public class PropertyteController : Controller
     {
         Logica logica = new Logica();
+        bool MethodSucess=false;
         public IActionResult NewProperty()
         {
             return View();
         }
-    
+
         [HttpPost]
-        public IActionResult NewProperty(Propertys propertys)
+        public bool NewProperty(Propertys propertys)
         {
-             if (!ModelState.IsValid)
-                return View();
             var Respuesta = logica.NewProperty(propertys);
             if (Respuesta)
-                return RedirectToAction("Index", "Home");
-            else
-                return View();
+            {
+                MethodSucess = true;
+            }
+            return MethodSucess;
+        }
+        
+        public bool RentHouse(HouseRents houseRents)
+        {
+            var Respuesta = logica.RentHouse(houseRents);
+            if (Respuesta)
+            {
+                MethodSucess = true;
+            }
+            return MethodSucess;
+
         }
     }
 }
